@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "E  ",
+    "EE ",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "indastrialmodformine:coke_furnace_block"
+    }
+  },
+  "result": {
+    "item": "indastrialmodformine:coke_furnace_block_stair",
+    "count": 4
+  },
+  "show_notification": true
+}

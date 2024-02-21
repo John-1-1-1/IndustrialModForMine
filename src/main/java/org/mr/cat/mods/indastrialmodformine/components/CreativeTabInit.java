@@ -22,9 +22,9 @@ public class CreativeTabInit {
     public static final List<Supplier<? extends ItemLike>> INDASTRIAL_TAB_ITEMS = new ArrayList<>();
 
     // регистрация элементов для вкладки
-    public static final RegistryObject<CreativeModeTab> INDASTRIAL_TAB = TABS.register("indastrial_mod",
+    public static final RegistryObject<CreativeModeTab> INDASTRIAL_TAB = TABS.register("indastrial_tab",
             () -> CreativeModeTab.builder()
-                    .title(Component.translatable("IndustrialMod"))
+                    .title(Component.translatable("itemGroup.indastrial_tab"))
                     //.icon(ItemInit.EXAMPLE_ITEM.get()::getDefaultInstance)
                     .displayItems((displayParams, output) ->
                             INDASTRIAL_TAB_ITEMS.forEach(itemLike -> output.accept(itemLike.get())))

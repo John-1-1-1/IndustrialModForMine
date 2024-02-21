@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "FEF",
+    "EEE",
+    "FEF"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:brick"
+    },
+    "F": {
+      "item": "minecraft:stone_bricks"
+    }
+  },
+  "result": {
+    "item": "indastrialmodformine:coke_furnace_block",
+    "count": 2
+  }
+}
