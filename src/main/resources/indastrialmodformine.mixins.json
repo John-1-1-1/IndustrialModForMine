@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.mr.cat.mods.indastrialmodformine.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "IndastrialModForMine.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
