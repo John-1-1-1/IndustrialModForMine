@@ -24,7 +24,7 @@ public class ItemInit {
 
     // Создание предмета ступеньки
     public static RegistryObject<BlockItem> COKE_FURNACE_STAIR_ITEM =
-            addToTab(ITEMS.register("coke_furnace_block_stair", () ->
-                    new BlockItem(BlockInit.COKE_FURNACE_BLOCK_STAIR.get(),
+            addToTab(ITEMS.register("coke_furnace_stair", () ->
+                    new BlockItem(BlockInit.COKE_FURNACE_STAIR.get(),
                             new Item.Properties())));
 }
