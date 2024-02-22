@@ -27,4 +27,10 @@ public class ItemInit {
             addToTab(ITEMS.register("coke_furnace_stair", () ->
                     new BlockItem(BlockInit.COKE_FURNACE_STAIR.get(),
                             new Item.Properties())));
+
+    // Создание предмета плиты
+    public static RegistryObject<BlockItem> COKE_FURNACE_SLAB_ITEM =
+            addToTab(ITEMS.register("coke_furnace_slab", () ->
+                    new BlockItem(BlockInit.COKE_FURNACE_SLAB.get(),
+                            new Item.Properties())));
 }

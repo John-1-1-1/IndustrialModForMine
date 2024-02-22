@@ -29,4 +29,10 @@ public class BlockInit {
                     SPRUCE_PLANKS.defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.STONE)));
 
+
+    // Создание плиты
+    public static final RegistryObject<Block> COKE_FURNACE_SLAB =
+            BLOCKS.register("coke_furnace_slab", () -> new SlabBlock((
+                    BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops())));
+
 }
