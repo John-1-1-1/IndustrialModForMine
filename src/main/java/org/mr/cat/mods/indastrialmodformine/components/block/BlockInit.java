@@ -35,4 +35,9 @@ public class BlockInit {
             BLOCKS.register("coke_furnace_slab", () -> new SlabBlock((
                     BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops())));
 
+    // Создание топки
+    public static final RegistryObject<Block> COKE_FURNACE_FIREBOX =
+            BLOCKS.register("coke_furnace_firebox", () -> new FireBoxFurnace((
+                    BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops())));
+
 }

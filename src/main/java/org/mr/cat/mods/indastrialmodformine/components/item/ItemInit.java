@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
 import org.mr.cat.mods.indastrialmodformine.components.block.BlockInit;
+import org.mr.cat.mods.indastrialmodformine.components.block.FireBoxFurnace;
 
 import static org.mr.cat.mods.indastrialmodformine.components.CreativeTabInit.addToTab;
 
@@ -33,4 +34,12 @@ public class ItemInit {
             addToTab(ITEMS.register("coke_furnace_slab", () ->
                     new BlockItem(BlockInit.COKE_FURNACE_SLAB.get(),
                             new Item.Properties())));
+
+
+    // Создание предмета плиты
+    public static RegistryObject<BlockItem> COKE_FURNACE_FIREBOX =
+            addToTab(ITEMS.register("coke_furnace_firebox", () ->
+                    new BlockItem(BlockInit.COKE_FURNACE_FIREBOX.get(),
+                            new Item.Properties())));
+
 }
