@@ -2,6 +2,7 @@ package org.mr.cat.mods.indastrialmodformine.components.block;
 
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,10 +13,9 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -41,6 +41,23 @@ public class FireBoxFurnace extends Block implements EntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_48725_) {
         p_48725_.add(FACING, LIT);
     }
+
+    public BlockState rotate(BlockState p_48722_, Rotation p_48723_) {
+        return (BlockState)p_48722_.setValue(FACING, p_48723_.rotate((Direction)p_48722_.getValue(FACING)));
+    }
+
+    public BlockState mirror(BlockState p_48719_, Mirror p_48720_) {
+        return p_48719_.rotate(p_48720_.getRotation((Direction)p_48719_.getValue(FACING)));
+    }
+
+    public RenderShape getRenderShape(BlockState p_48727_) {
+        return RenderShape.MODEL;
+    }
+
+    public BlockState getStateForPlacement(BlockPlaceContext p_48689_) {
+        return (BlockState)this.defaultBlockState().setValue(FACING, p_48689_.getHorizontalDirection().getOpposite());
+    }
+
 
     public FireBoxFurnace(Properties p_49795_) {
         super(p_49795_);
