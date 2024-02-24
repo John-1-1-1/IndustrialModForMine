@@ -1,4 +1,4 @@
-package org.mr.cat.mods.indastrialmodformine.components;
+package org.mr.cat.mods.indastrialmodformine.init;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class CreativeTabInit {
+public class ModTabs {
 
     // отложенная регистрация вкладки
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, IndastrialModForMine.MODID);
+    public static final DeferredRegister<CreativeModeTab> RYGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, IndastrialModForMine.MODID);
 
     // отображаемые элементы
     public static final List<Supplier<? extends ItemLike>> INDASTRIAL_TAB_ITEMS = new ArrayList<>();
 
     // регистрация элементов для вкладки
-    public static final RegistryObject<CreativeModeTab> INDASTRIAL_TAB = TABS.register("indastrial_tab",
+    public static final RegistryObject<CreativeModeTab> INDASTRIAL_TAB = RYGISTRY.register("indastrial_tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.indastrial_tab"))
                     //.icon(ItemInit.EXAMPLE_ITEM.get()::getDefaultInstance)

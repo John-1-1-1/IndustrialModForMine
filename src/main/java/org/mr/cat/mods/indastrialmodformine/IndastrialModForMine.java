@@ -1,35 +1,16 @@
 package org.mr.cat.mods.indastrialmodformine;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.mr.cat.mods.indastrialmodformine.components.CreativeTabInit;
-import org.mr.cat.mods.indastrialmodformine.components.block.BlockInit;
-import org.mr.cat.mods.indastrialmodformine.components.item.ItemInit;
+import org.mr.cat.mods.indastrialmodformine.init.*;
 import org.slf4j.Logger;
 
 
@@ -49,11 +30,15 @@ public class IndastrialModForMine {
         // регистрация commonSetup метода в modloading
         modEventBus.addListener(this::commonSetup);
         // подгрузка регистратора блоков
-        BlockInit.BLOCKS.register(modEventBus);
+        ModBlocks.REGISTRY.register(modEventBus);
         // подгрузка регистратора предметов
-        ItemInit.ITEMS.register(modEventBus);
-        // подгрузка регистратора вкладок
-        CreativeTabInit.TABS.register(modEventBus);
+        ModItems.REGISTRY.register(modEventBus);
+        // подгрузка регистратора Entity
+        ModBlockEntities.REGISTRY.register(modEventBus);
+        // подгрузка регистратора менюшек
+        ModMenus.REGISTRY.register(modEventBus);
+
+        ModTabs.RYGISTRY.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
@@ -71,17 +56,5 @@ public class IndastrialModForMine {
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
-    }
-
-   @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        }
     }
 }

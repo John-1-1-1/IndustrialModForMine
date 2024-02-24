@@ -1,4 +1,4 @@
-package org.mr.cat.mods.indastrialmodformine.components.block;
+package org.mr.cat.mods.indastrialmodformine.init;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -9,35 +9,36 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
+import org.mr.cat.mods.indastrialmodformine.components.block.FireBoxFurnace;
 
 import static net.minecraft.world.level.block.Blocks.SPRUCE_PLANKS;
 
-public class BlockInit {
+public class ModBlocks {
     // Отложенная регистрация
-    public static final DeferredRegister<Block> BLOCKS =
+    public static final DeferredRegister<Block> REGISTRY =
             DeferredRegister.create(ForgeRegistries.BLOCKS, IndastrialModForMine.MODID);
 
     // Создание блока
     public static final RegistryObject<Block> COKE_FURNACE_BLOCK =
-            BLOCKS.register("coke_furnace_block", () -> new Block(
+            REGISTRY.register("coke_furnace_block", () -> new Block(
                     BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops()));
 
 
     // Создание блока
     public static final RegistryObject<Block> COKE_FURNACE_STAIR =
-            BLOCKS.register("coke_furnace_stair", () -> new StairBlock(
+            REGISTRY.register("coke_furnace_stair", () -> new StairBlock(
                     SPRUCE_PLANKS.defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.STONE)));
 
 
     // Создание плиты
     public static final RegistryObject<Block> COKE_FURNACE_SLAB =
-            BLOCKS.register("coke_furnace_slab", () -> new SlabBlock((
+            REGISTRY.register("coke_furnace_slab", () -> new SlabBlock((
                     BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops())));
 
     // Создание топки
     public static final RegistryObject<Block> COKE_FURNACE_FIREBOX =
-            BLOCKS.register("coke_furnace_firebox", () -> new FireBoxFurnace((
+            REGISTRY.register("coke_furnace_firebox", () -> new FireBoxFurnace((
                     BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops())));
 
 }
