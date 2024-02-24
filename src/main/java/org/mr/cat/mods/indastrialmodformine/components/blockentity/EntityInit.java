@@ -27,4 +27,6 @@ public class EntityInit {
                     () -> BlockEntityType.Builder.of(FireBoxFurnaceEntity::new, COKE_FURNACE_FIREBOX.get())
                             .build(null));
 
+
+
 }
