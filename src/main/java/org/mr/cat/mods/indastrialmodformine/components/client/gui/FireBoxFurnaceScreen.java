@@ -2,6 +2,7 @@ package org.mr.cat.mods.indastrialmodformine.components.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,6 +15,8 @@ public class FireBoxFurnaceScreen  extends AbstractContainerScreen<FireBoxFurnac
         super(p_97741_, p_97742_, p_97743_);
         this.imageWidth = 176;
         this.imageHeight = 166;
+        this.leftPos = (this.width - this.imageWidth) / 2;
+        this.topPos = (this.height - this.imageHeight) / 2;
     }
 
 
@@ -26,7 +29,10 @@ public class FireBoxFurnaceScreen  extends AbstractContainerScreen<FireBoxFurnac
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth,
+                this.imageHeight);
+        guiGraphics.fill(this.leftPos + 99, this.topPos + 14, this.leftPos + 117, this.topPos + 64, 0xFF404040);
+
         RenderSystem.disableBlend();
     }
 }
