@@ -20,7 +20,7 @@ public class IndastrialModForMine {
     // Идентификатор мода
     public static final String MODID = "indastrialmodformine";
     // Логгер
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     // Конструктор
     public IndastrialModForMine() {

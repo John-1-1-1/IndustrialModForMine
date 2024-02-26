@@ -1,39 +1,122 @@
 package org.mr.cat.mods.indastrialmodformine.components.blockentity;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.jetbrains.annotations.NotNull;
+import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
+import org.mr.cat.mods.indastrialmodformine.components.block.FireBoxFurnace;
+import org.mr.cat.mods.indastrialmodformine.components.block.TickableBlockEntity;
+import org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.FireBoxFurnaceMenu;
 import org.mr.cat.mods.indastrialmodformine.init.ModBlockEntities;
 
+import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
-public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
+public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity implements WorldlyContainer, TickableBlockEntity {
+
+
+
 
     private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+    private final LazyOptional<? extends IItemHandler>[]
+            handlers = SidedInvWrapper.create(
+            this, Direction.values());
 
-    public FireBoxFurnaceEntity(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
-        super(p_155228_, p_155229_, p_155230_);
+    public FireBoxFurnaceEntity(BlockPos position, BlockState state) {
+        super(ModBlockEntities.EXAMPLE_SCREEN_BLOCK_ENTITY.get(), position, state);
+    }
 
+    int litTime;
+
+
+
+
+    @Override
+    public void load(@NotNull CompoundTag nbt) {
+        super.load(nbt);
+
+        var tutorialmodData = nbt.getCompound(IndastrialModForMine.MODID);
+        this.litTime = tutorialmodData.getInt("SecondsExisted");
     }
 
     @Override
-    protected Component getDefaultName() {
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
+        var tutorialmodData = new CompoundTag();
+        tutorialmodData.putInt("SecondsExisted", this.litTime);
+        compound.put(IndastrialModForMine.MODID, tutorialmodData);
+        if (!this.trySaveLootTable(compound)) {
+            ContainerHelper.saveAllItems(compound, this.stacks);
+        }
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithFullMetadata();
+    }
+
+    @Override
+    public int getContainerSize() {
+        return stacks.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks)
+            if (!itemstack.isEmpty())
+                return false;
+        return true;
+    }
+
+    @Override
+    public Component getDefaultName() {
         return Component.literal("fdfdf");
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return null;
+    public int getMaxStackSize() {
+        return 64;
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        return new FireBoxFurnaceMenu(id, inventory,
+                new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.literal("Fdfdf");
     }
 
     @Override
@@ -42,31 +125,80 @@ public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity imple
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> nonNullList) {
-        this.stacks = nonNullList;
-    }
-
-    public FireBoxFurnaceEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.EXAMPLE_SCREEN_BLOCK_ENTITY.get(), pos, state);
+    protected void setItems(NonNullList<ItemStack> stacks) {
+        this.stacks = stacks;
     }
 
     @Override
-    public int[] getSlotsForFace(Direction direction) {
-        return IntStream.range(0, this.getContainerSize()).toArray();
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, @Nullable Direction direction) {
-        return this.canPlaceItem(i, itemStack);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+    public boolean canPlaceItem(int index, ItemStack stack) {
         return true;
     }
 
     @Override
-    public int getContainerSize() {
-        return stacks.size();
+    public int[] getSlotsForFace(Direction side) {
+        return IntStream.range(0, this.getContainerSize()).toArray();
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @javax.annotation.Nullable Direction direction) {
+        return this.canPlaceItem(index, stack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return true;
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+        if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
+            return handlers[facing.ordinal()].cast();
+        return super.getCapability(capability, facing);
+    }
+
+    public boolean isLit() { return this.litTime > 0;}
+
+
+    protected int getBurnDuration(ItemStack p_58343_) {
+        if (p_58343_.isEmpty()) {
+            return 0;
+        } else {
+            Item item = p_58343_.getItem();
+            // TODO : Создать свой тип рецептов  или юхать печкин
+            return ForgeHooks.getBurnTime(p_58343_, RecipeType.BLASTING);
+        }
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        for (LazyOptional<? extends IItemHandler> handler : handlers)
+            handler.invalidate();
+    }
+
+    public int getLit(){
+        return this.litTime;
+    }
+
+
+
+
+    @Override
+    public <T extends BlockEntity> void tick(Level level0, BlockPos pos0, BlockState state0, T blockEntity) {
+        ItemStack itemstack = (ItemStack)this.getItem(0);
+        var e =(BlockState)state0.setValue(FireBoxFurnace.LIT, this.isLit());
+        level0.setBlock(pos0, e,3);
+        if (this.isLit()){
+            IndastrialModForMine.LOGGER.info(String.valueOf(this.litTime));
+            --this.litTime;
+            setChanged();
+            this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+            return;
+        }
+
+        if (!itemstack.isEmpty()) {
+            this.litTime = this.getBurnDuration(itemstack);
+            itemstack.shrink(1);
+        }
     }
 }
