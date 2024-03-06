@@ -50,22 +50,22 @@ public class FireBoxFurnace extends Block implements EntityBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+    public @NotNull List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> dropsOriginal = super.getDrops(state, builder);
         if (!dropsOriginal.isEmpty())
             return dropsOriginal;
         return Collections.singletonList(new ItemStack(this, 1));
     }
 
-    public BlockState rotate(BlockState p_48722_, Rotation p_48723_) {
-        return (BlockState)p_48722_.setValue(FACING, p_48723_.rotate((Direction)p_48722_.getValue(FACING)));
+    public @NotNull BlockState rotate(BlockState p_48722_, Rotation p_48723_) {
+        return p_48722_.setValue(FACING, p_48723_.rotate(p_48722_.getValue(FACING)));
     }
 
-    public BlockState mirror(BlockState p_48719_, Mirror p_48720_) {
-        return p_48719_.rotate(p_48720_.getRotation((Direction)p_48719_.getValue(FACING)));
+    public @NotNull BlockState mirror(BlockState p_48719_, Mirror p_48720_) {
+        return p_48719_.rotate(p_48720_.getRotation(p_48719_.getValue(FACING)));
     }
 
-    public RenderShape getRenderShape(BlockState p_48727_) {
+    public @NotNull RenderShape getRenderShape(BlockState p_48727_) {
         return RenderShape.MODEL;
     }
 
@@ -84,18 +84,7 @@ public class FireBoxFurnace extends Block implements EntityBlock {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
         super.use(blockstate, world, pos, entity, hand, hit);
         if (entity instanceof ServerPlayer player) {
-            NetworkHooks.openScreen(player, new MenuProvider() {
-                @Override
-                public Component getDisplayName() {
-                    return Component.literal("Fdfdf");
-                }
-
-                @Override
-                public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-                    return new FireBoxFurnaceMenu(id, inventory,
-                            new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
-                }
-            }, pos);
+            NetworkHooks.openScreen(player, new FireBoxFurnaceEntity(pos, blockstate), pos);
         }
         return InteractionResult.SUCCESS;
     }
@@ -123,5 +112,4 @@ public class FireBoxFurnace extends Block implements EntityBlock {
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new FireBoxFurnaceEntity(blockPos, blockState);
     }
-
 }
