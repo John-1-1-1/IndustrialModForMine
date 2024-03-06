@@ -1,6 +1,7 @@
 package org.mr.cat.mods.indastrialmodformine.components.blockentity;
 
 import io.netty.buffer.Unpooled;
+import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -12,14 +13,17 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -35,12 +39,11 @@ import org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.FireBoxFu
 import org.mr.cat.mods.indastrialmodformine.init.ModBlockEntities;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity implements WorldlyContainer, TickableBlockEntity {
-
-
-
 
     private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
     private final LazyOptional<? extends IItemHandler>[]
@@ -53,22 +56,30 @@ public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity imple
 
     int litTime;
 
-
-
+    int litProgress;
 
     @Override
     public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
 
         var tutorialmodData = nbt.getCompound(IndastrialModForMine.MODID);
-        this.litTime = tutorialmodData.getInt("SecondsExisted");
+
+        this.litTime = tutorialmodData.getInt("LitTime");
+        this.litProgress = tutorialmodData.getInt("LitProgress");
+
+        if (!this.tryLoadLootTable(nbt))
+            this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(nbt, this.stacks);
     }
 
     @Override
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
         var tutorialmodData = new CompoundTag();
-        tutorialmodData.putInt("SecondsExisted", this.litTime);
+
+        tutorialmodData.putInt("LitTime", this.litTime);
+        tutorialmodData.putInt("LitProgress", this.litProgress);
+
         compound.put(IndastrialModForMine.MODID, tutorialmodData);
         if (!this.trySaveLootTable(compound)) {
             ContainerHelper.saveAllItems(compound, this.stacks);
@@ -176,28 +187,49 @@ public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity imple
             handler.invalidate();
     }
 
-    public int getLit(){
-        return this.litTime;
+    public int getPxLit(){
+        return litProgress / 20;
     }
 
+    int maxLit = 200;
 
-
+    public int getLitProgress(){
+        return litTime * 13 / maxLit;
+    }
 
     @Override
     public <T extends BlockEntity> void tick(Level level0, BlockPos pos0, BlockState state0, T blockEntity) {
         ItemStack itemstack = (ItemStack)this.getItem(0);
         var e =(BlockState)state0.setValue(FireBoxFurnace.LIT, this.isLit());
+
         level0.setBlock(pos0, e,3);
+
         if (this.isLit()){
-            IndastrialModForMine.LOGGER.info(String.valueOf(this.litTime));
+
+            ++litProgress;
+
+            if (litProgress > 1000){
+                litProgress = 1000;
+            }
+
             --this.litTime;
+
             setChanged();
             this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             return;
         }
+        else{
+            --litProgress;
+            if (litProgress < 0){
+                litProgress = 0;
+            }
+            setChanged();
+            this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
 
         if (!itemstack.isEmpty()) {
             this.litTime = this.getBurnDuration(itemstack);
+            maxLit = this.litTime;
             itemstack.shrink(1);
         }
     }

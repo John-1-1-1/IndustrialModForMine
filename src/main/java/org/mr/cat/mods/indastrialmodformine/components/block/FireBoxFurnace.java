@@ -7,12 +7,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -25,12 +27,16 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mr.cat.mods.indastrialmodformine.components.blockentity.FireBoxFurnaceEntity;
 import org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.FireBoxFurnaceMenu;
+
+import java.util.Collections;
+import java.util.List;
 
 public class FireBoxFurnace extends Block implements EntityBlock {
 
@@ -41,6 +47,14 @@ public class FireBoxFurnace extends Block implements EntityBlock {
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_48725_) {
         p_48725_.add(FACING, LIT);
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+        if (!dropsOriginal.isEmpty())
+            return dropsOriginal;
+        return Collections.singletonList(new ItemStack(this, 1));
     }
 
     public BlockState rotate(BlockState p_48722_, Rotation p_48723_) {
@@ -56,7 +70,8 @@ public class FireBoxFurnace extends Block implements EntityBlock {
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext p_48689_) {
-        return (BlockState)this.defaultBlockState().setValue(FACING, p_48689_.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, p_48689_.getHorizontalDirection().getOpposite())
+                .setValue(FireBoxFurnace.LIT, false);
     }
 
 
@@ -85,6 +100,18 @@ public class FireBoxFurnace extends Block implements EntityBlock {
         return InteractionResult.SUCCESS;
     }
 
+
+    @Override
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof FireBoxFurnaceEntity be) {
+                Containers.dropContents(world, pos, be);
+                world.updateNeighbourForOutputSignal(pos, this);
+            }
+            super.onRemove(state, world, pos, newState, isMoving);
+        }
+    }
 
     @org.jetbrains.annotations.Nullable
     @Override

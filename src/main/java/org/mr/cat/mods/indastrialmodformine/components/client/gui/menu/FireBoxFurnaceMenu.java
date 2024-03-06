@@ -13,9 +13,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -57,10 +59,7 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
             this.y = pos.getY();
             this.z = pos.getZ();
             access = ContainerLevelAccess.create(world, pos);
-
         }
-
-
 
         if (pos != null) {
             if (extraData.readableBytes() == 1) { // bound to item
@@ -96,7 +95,7 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
                     });
             }
         }
-        this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 16, 34) {
+        this.customSlots.put(0, this.addSlot(new FurnaceFuelSlot(this, internal, 0, 26, 34) {
             private final int slot = 0;
         }));
         for (int si = 0; si < 3; ++si)
@@ -132,15 +131,19 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
                 if (!this.moveItemStackTo(itemstack1, 1, this.slots.size(), true))
                     return ItemStack.EMPTY;
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+            } else
+                if (this.isFuel(itemstack1)){
+                    if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else
                 if (index < 1 + 27) {
                     if (!this.moveItemStackTo(itemstack1, 1 + 27, this.slots.size(), true))
                         return ItemStack.EMPTY;
                 } else {
                     if (!this.moveItemStackTo(itemstack1, 1, 1 + 27, false))
                         return ItemStack.EMPTY;
-                }
-                return ItemStack.EMPTY;
             }
             if (itemstack1.getCount() == 0)
                 slot.set(ItemStack.EMPTY);
@@ -151,6 +154,10 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
             slot.onTake(playerIn, itemstack1);
         }
         return itemstack;
+    }
+
+    protected boolean isFuel(ItemStack p_38989_) {
+        return ForgeHooks.getBurnTime(p_38989_, RecipeType.BLASTING) > 0;
     }
 
     @Override
@@ -229,6 +236,7 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
             }
         }
         return flag;
+
     }
 
     @Override

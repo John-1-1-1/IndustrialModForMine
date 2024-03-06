@@ -7,7 +7,9 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
 import org.mr.cat.mods.indastrialmodformine.components.blockentity.FireBoxFurnaceEntity;
@@ -46,7 +48,7 @@ public class FireBoxFurnaceScreen  extends AbstractContainerScreen<FireBoxFurnac
     }
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(IndastrialModForMine.MODID,
-            "textures/gui/example_fluid.png");
+            "textures/gui/ww.png");
 
 
     @Override
@@ -57,26 +59,21 @@ public class FireBoxFurnaceScreen  extends AbstractContainerScreen<FireBoxFurnac
         guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth,
                 this.imageHeight);
 
+        if (blockEntity.isLit()) {
+            int pxProgress = blockEntity.getLitProgress();
+            guiGraphics.blit(TEXTURE, this.leftPos + 54, this.topPos + 36 + 12 - pxProgress,
+                    176, 12 - pxProgress, 14, pxProgress + 1);
+        }
 
-        guiGraphics.fill(this.leftPos + 99, this.topPos + 14, this.leftPos + 117, this.topPos + 64, 0xFF404040);
-
+        guiGraphics.fill(this.leftPos + 99, this.topPos + 14, this.leftPos + 117,
+                this.topPos + 64, 0xFF404040);
         RenderSystem.disableBlend();
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int p_283661_, int p_281248_, float p_281886_) {
-
         super.render(guiGraphics, p_283661_, p_281248_, p_281886_);
-
-
-
-
-        IndastrialModForMine.LOGGER.info(String.valueOf(blockEntity.getLit()));
-        guiGraphics.drawString(this.font,
-                "Seconds Existed:" + String.valueOf(blockEntity.getLit()),
-                this.leftPos + 8,
-                this.topPos ,
-                0xFF0000,
-                false);
+        guiGraphics.fill(this.leftPos + 99, this.topPos + 64 - blockEntity.getPxLit(), this.leftPos + 117,
+                this.topPos + 64, 0xFFF7490F);
     }
 }
