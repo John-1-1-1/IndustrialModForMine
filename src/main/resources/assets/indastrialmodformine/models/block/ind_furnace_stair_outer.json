@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "indastrialmodformine:block/ind_furnace_block",
+    "side": "indastrialmodformine:block/ind_furnace_block",
+    "top": "indastrialmodformine:block/ind_furnace_block"
+  }
+}

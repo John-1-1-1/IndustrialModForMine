@@ -1,9 +1,10 @@
-package org.mr.cat.mods.indastrialmodformine.components.client.gui.menu;
+package org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.slots;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.FireBoxFurnaceMenu;
 
 public class FurnaceFuelSlot extends SlotItemHandler {
     private final FireBoxFurnaceMenu menu;

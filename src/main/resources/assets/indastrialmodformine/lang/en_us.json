@@ -1,9 +1,9 @@
 {
-  "block.indastrialmodformine.coke_furnace_block": "Coke furnace block",
-  "item.indastrialmodformine.coke_furnace_block": "Coke furnace block",
-  "block.indastrialmodformine.coke_furnace_stair": "Coke furnace stair",
-  "item.indastrialmodformine.coke_furnace_stair": "Coke furnace stair",
-  "block.indastrialmodformine.coke_furnace_slab": "Coke furnace slab",
-  "item.indastrialmodformine.coke_furnace_slab": "Coke furnace slab",
+  "block.indastrialmodformine.ind_furnace_block": "ind furnace block",
+  "item.indastrialmodformine.ind_furnace_block": "ind furnace block",
+  "block.indastrialmodformine.ind_furnace_stair": "ind furnace stair",
+  "item.indastrialmodformine.ind_furnace_stair": "ind furnace stair",
+  "block.indastrialmodformine.ind_furnace_slab": "ind furnace slab",
+  "item.indastrialmodformine.ind_furnace_slab": "ind furnace slab",
   "itemGroup.indastrial_tab": "Indastrial"
 }

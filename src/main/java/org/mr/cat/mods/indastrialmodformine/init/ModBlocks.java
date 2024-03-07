@@ -12,6 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
 import org.mr.cat.mods.indastrialmodformine.components.block.FireBoxFurnace;
+import org.mr.cat.mods.indastrialmodformine.components.block.IndFurnace;
 
 import java.util.function.ToIntFunction;
 
@@ -30,26 +31,38 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, IndastrialModForMine.MODID);
 
     // Создание блока
-    public static final RegistryObject<Block> COKE_FURNACE_BLOCK =
-            REGISTRY.register("coke_furnace_block", () -> new Block(
+    public static final RegistryObject<Block> IND_FURNACE_BLOCK =
+            REGISTRY.register("ind_furnace_block", () -> new Block(
                     BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops()));
 
 
     // Создание блока
-    public static final RegistryObject<Block> COKE_FURNACE_STAIR =
-            REGISTRY.register("coke_furnace_stair", () -> new StairBlock(
+    public static final RegistryObject<Block> IND_FURNACE_STAIR =
+            REGISTRY.register("ind_furnace_stair", () -> new StairBlock(
                     SPRUCE_PLANKS.defaultBlockState(),
                     BlockBehaviour.Properties.copy(Blocks.STONE)));
 
 
     // Создание плиты
-    public static final RegistryObject<Block> COKE_FURNACE_SLAB =
-            REGISTRY.register("coke_furnace_slab", () -> new SlabBlock((
+    public static final RegistryObject<Block> IND_FURNACE_SLAB =
+            REGISTRY.register("ind_furnace_slab", () -> new SlabBlock((
                     BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops())));
 
     // Создание топки
-    public static final RegistryObject<Block> COKE_FURNACE_FIREBOX =
-            REGISTRY.register("coke_furnace_firebox", () -> new FireBoxFurnace((
-                    BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().lightLevel(litBlockEmission(13)))));
+    public static final RegistryObject<Block> IND_FURNACE_FIREBOX =
+            REGISTRY.register("ind_furnace_firebox", () -> new FireBoxFurnace((
+                    BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().
+                            lightLevel(litBlockEmission(13)))));
+
+
+    // Создание печи
+    public static final RegistryObject<Block> IND_FURNACE =
+            REGISTRY.register("ind_furnace", () -> new IndFurnace(
+                    BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops()));
+
+    // Создание печи
+    public static final RegistryObject<Block> SILVER_ORE =
+            REGISTRY.register("silver_ore", () -> new IndFurnace(
+                    BlockBehaviour.Properties.copy(Blocks.IRON_ORE).requiresCorrectToolForDrops()));
 
 }

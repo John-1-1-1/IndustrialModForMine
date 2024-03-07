@@ -9,8 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
-import org.mr.cat.mods.indastrialmodformine.components.client.gui.FireBoxFurnaceScreen;
+import org.mr.cat.mods.indastrialmodformine.components.client.gui.screen.FireBoxFurnaceScreen;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModScreens {

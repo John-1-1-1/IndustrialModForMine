@@ -1,13 +1,8 @@
 package org.mr.cat.mods.indastrialmodformine.components.client.gui.menu;
 
-import com.mojang.blaze3d.platform.ScreenManager;
-import net.minecraft.client.Screenshot;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,15 +10,13 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 import org.mr.cat.mods.indastrialmodformine.components.blockentity.FireBoxFurnaceEntity;
+import org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.slots.FurnaceFuelSlot;
 import org.mr.cat.mods.indastrialmodformine.init.ModMenus;
 
 import java.util.HashMap;
@@ -156,7 +149,7 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
         return itemstack;
     }
 
-    protected boolean isFuel(ItemStack p_38989_) {
+    public boolean isFuel(ItemStack p_38989_) {
         return ForgeHooks.getBurnTime(p_38989_, RecipeType.BLASTING) > 0;
     }
 

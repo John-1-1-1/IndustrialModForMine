@@ -1,7 +1,8 @@
 {
   "values": [
-    "indastrialmodformine:coke_furnace_block",
-    "indastrialmodformine:coke_furnace_stair",
-    "indastrialmodformine:coke_furnace_slab"
+    "indastrialmodformine:ind_furnace_block",
+    "indastrialmodformine:ind_furnace_stair",
+    "indastrialmodformine:ind_furnace_slab",
+    "indastrialmodformine:silver_ore"
   ]
 }

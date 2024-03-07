@@ -53,7 +53,7 @@ public class FireBoxFurnaceEntity extends RandomizableContainerBlockEntity imple
             this, Direction.values());
 
     public FireBoxFurnaceEntity(BlockPos position, BlockState state) {
-        super(ModBlockEntities.EXAMPLE_SCREEN_BLOCK_ENTITY.get(), position, state);
+        super(ModBlockEntities.IND_FURNACE_ENTITY.get(), position, state);
     }
 
     int litTime;

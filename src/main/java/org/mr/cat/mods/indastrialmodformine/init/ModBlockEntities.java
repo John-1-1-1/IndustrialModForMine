@@ -8,7 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
 import org.mr.cat.mods.indastrialmodformine.components.blockentity.FireBoxFurnaceEntity;
 
-import static org.mr.cat.mods.indastrialmodformine.init.ModBlocks.COKE_FURNACE_FIREBOX;
+import static org.mr.cat.mods.indastrialmodformine.init.ModBlocks.IND_FURNACE_FIREBOX;
 
 public class ModBlockEntities {
     // Отложенная регистрация
@@ -16,9 +16,15 @@ public class ModBlockEntities {
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, IndastrialModForMine.MODID);
 
     // Создание сущности
-    public static final RegistryObject<BlockEntityType<?>> EXAMPLE_SCREEN_BLOCK_ENTITY =
-            register("example_screen_block",
-                    COKE_FURNACE_FIREBOX,
+    public static final RegistryObject<BlockEntityType<?>> IND_FURNACE_FIREBOX_ENTITY =
+            register("ind_furnace_firebox_entity",
+                    IND_FURNACE_FIREBOX,
+                    FireBoxFurnaceEntity::new);
+
+    // Создание сущности
+    public static final RegistryObject<BlockEntityType<?>> IND_FURNACE_ENTITY =
+            register("ind_furnace_entity",
+                    IND_FURNACE_FIREBOX,
                     FireBoxFurnaceEntity::new);
 
     private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {

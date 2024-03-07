@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "indastrialmodformine:block/coke_furnace_block",
-    "side": "indastrialmodformine:block/coke_furnace_block",
-    "top": "indastrialmodformine:block/coke_furnace_block"
-  }
-}

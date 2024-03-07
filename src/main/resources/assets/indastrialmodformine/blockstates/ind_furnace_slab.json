@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "indastrialmodformine:block/ind_furnace_slab"
+    },
+    "type=double": {
+      "model": "indastrialmodformine:block/ind_furnace_block"
+    },
+    "type=top": {
+      "model": "indastrialmodformine:block/ind_furnace_slab_top"
+    }
+  }
+}

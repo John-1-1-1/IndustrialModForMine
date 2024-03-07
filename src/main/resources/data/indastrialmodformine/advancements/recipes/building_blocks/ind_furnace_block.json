@@ -21,7 +21,7 @@
   ],
   "rewards": {
     "recipes": [
-      "indastrialmodformine:coke_furnace_slab"
+      "indastrialmodformine:ind_furnace_block"
     ]
   },
   "sends_telemetry_event": false

@@ -1,4 +1,4 @@
-package org.mr.cat.mods.indastrialmodformine.components.client.gui;
+package org.mr.cat.mods.indastrialmodformine.components.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;

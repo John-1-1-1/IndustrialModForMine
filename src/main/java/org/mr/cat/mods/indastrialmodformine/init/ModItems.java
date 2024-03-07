@@ -18,21 +18,29 @@ public class ModItems {
                     IndastrialModForMine.MODID);
 
     // Создание предмета блока
-    public static RegistryObject<Item> COKE_FURNACE_ITEM =
-            block(ModBlocks.COKE_FURNACE_BLOCK);
+    public static RegistryObject<Item> IND_FURNACE_ITEM =
+            block(ModBlocks.IND_FURNACE_BLOCK);
 
     // Создание предмета ступеньки
-    public static RegistryObject<Item> COKE_FURNACE_STAIR_ITEM =
-            block(ModBlocks.COKE_FURNACE_STAIR);
+    public static RegistryObject<Item> IND_FURNACE_STAIR_ITEM =
+            block(ModBlocks.IND_FURNACE_STAIR);
 
     // Создание предмета плиты
-    public static RegistryObject<Item> COKE_FURNACE_SLAB_ITEM =
-            block(ModBlocks.COKE_FURNACE_SLAB);
+    public static RegistryObject<Item> IND_FURNACE_SLAB_ITEM =
+            block(ModBlocks.IND_FURNACE_SLAB);
 
 
     // Создание предмета плиты
-    public static RegistryObject<Item> COKE_FURNACE_FIREBOX =
-            block(ModBlocks.COKE_FURNACE_FIREBOX);
+    public static RegistryObject<Item> IND_FURNACE_FIREBOX =
+            block(ModBlocks.IND_FURNACE_FIREBOX);
+
+    // Создание предмета плиты
+    public static RegistryObject<Item> IND_FURNACE =
+            block(ModBlocks.IND_FURNACE);
+
+    // Создание предмета плиты
+    public static RegistryObject<Item> SILVER_ORE =
+            block(ModBlocks.SILVER_ORE);
 
     private static RegistryObject<Item> block(RegistryObject<Block> block) {
         return addToTab(REGISTRY.register(
