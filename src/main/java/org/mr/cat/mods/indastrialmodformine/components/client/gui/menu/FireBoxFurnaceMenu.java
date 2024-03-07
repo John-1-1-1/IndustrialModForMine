@@ -16,7 +16,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.mr.cat.mods.indastrialmodformine.components.blockentity.FireBoxFurnaceEntity;
-import org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.slots.FurnaceFuelSlot;
+import org.mr.cat.mods.indastrialmodformine.components.client.gui.slots.FurnaceFuelSlot;
 import org.mr.cat.mods.indastrialmodformine.init.ModMenus;
 
 import java.util.HashMap;
@@ -25,10 +25,8 @@ import java.util.function.Supplier;
 
 public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Supplier<Map<Integer, Slot>> {
 
-    public final static HashMap<String, Object> guistate = new HashMap<>();
     public final Level world;
     public final Player entity;
-    public int x, y, z;
     private ContainerLevelAccess access = ContainerLevelAccess.NULL;
     private IItemHandler internal;
     private final Map<Integer, Slot> customSlots = new HashMap<>();
@@ -37,7 +35,6 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
     private Entity boundEntity = null;
     private BlockEntity boundBlockEntity = null;
     BlockPos pos;
-    private FireBoxFurnaceEntity fireBoxFurnaceEntity;
 
 
     public FireBoxFurnaceMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
@@ -48,9 +45,6 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
         pos = null;
         if (extraData != null) {
             pos = extraData.readBlockPos();
-            this.x = pos.getX();
-            this.y = pos.getY();
-            this.z = pos.getZ();
             access = ContainerLevelAccess.create(world, pos);
         }
 
@@ -73,13 +67,6 @@ public class FireBoxFurnaceMenu  extends AbstractContainerMenu implements Suppli
                     });
             } else { // might be bound to block
                 boundBlockEntity = this.world.getBlockEntity(pos);
-
-                if(boundBlockEntity instanceof FireBoxFurnaceEntity be) {
-                    this.fireBoxFurnaceEntity = be;
-                } else {
-                    throw new IllegalStateException("Incorrect block entity class (%s) passed into ExampleMenu!"
-                            .formatted(boundBlockEntity.getClass().getCanonicalName()));
-                }
 
                 if (boundBlockEntity != null)
                     boundBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {

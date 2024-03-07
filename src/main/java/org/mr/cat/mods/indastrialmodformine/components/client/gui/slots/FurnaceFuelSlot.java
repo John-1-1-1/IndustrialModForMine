@@ -1,4 +1,4 @@
-package org.mr.cat.mods.indastrialmodformine.components.client.gui.menu.slots;
+package org.mr.cat.mods.indastrialmodformine.components.client.gui.slots;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

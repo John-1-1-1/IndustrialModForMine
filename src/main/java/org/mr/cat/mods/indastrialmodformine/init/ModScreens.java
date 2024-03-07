@@ -10,6 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.mr.cat.mods.indastrialmodformine.components.client.gui.screen.FireBoxFurnaceScreen;
+import org.mr.cat.mods.indastrialmodformine.components.client.gui.screen.IndFurnaceScreen;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModScreens {
@@ -18,6 +19,9 @@ public class ModScreens {
 		event.enqueueWork(() -> {
 			MenuScreens.register(ModMenus.FIRE_BOX_FURNACE_MENU.get(),
 					FireBoxFurnaceScreen::new);
+
+			MenuScreens.register(ModMenus.IND_FURNACE_MENU.get(),
+					IndFurnaceScreen::new);
 		});
 	}
 }
