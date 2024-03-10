@@ -42,6 +42,9 @@ public class ModItems {
     public static RegistryObject<Item> SILVER_ORE =
             block(ModBlocks.SILVER_ORE);
 
+    public static RegistryObject<Item> HEAT_PIPE =
+            block(ModBlocks.HEAT_PIPE);
+
     private static RegistryObject<Item> block(RegistryObject<Block> block) {
         return addToTab(REGISTRY.register(
                 block.getId().getPath(),

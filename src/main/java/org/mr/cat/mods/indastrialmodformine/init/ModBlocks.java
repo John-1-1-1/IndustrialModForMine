@@ -12,6 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.mr.cat.mods.indastrialmodformine.IndastrialModForMine;
 import org.mr.cat.mods.indastrialmodformine.components.block.FireBoxFurnace;
+import org.mr.cat.mods.indastrialmodformine.components.block.HeatPipe;
 import org.mr.cat.mods.indastrialmodformine.components.block.IndFurnace;
 
 import java.util.function.ToIntFunction;
@@ -64,5 +65,11 @@ public class ModBlocks {
     public static final RegistryObject<Block> SILVER_ORE =
             REGISTRY.register("silver_ore", () -> new IndFurnace(
                     BlockBehaviour.Properties.copy(Blocks.IRON_ORE).requiresCorrectToolForDrops()));
+
+
+    public static final RegistryObject<Block> HEAT_PIPE =
+            REGISTRY.register("heat_pipe", () -> new HeatPipe(
+                    BlockBehaviour.Properties.copy(Blocks.IRON_ORE).requiresCorrectToolForDrops()));
+
 
 }

@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe_side"
+      },
+      "when": {
+        "north": "side"
+      }
+    },
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe_side",
+        "y": 180
+      },
+      "when": {
+        "south": "side"
+      }
+    },
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe_side",
+        "y": 90
+      },
+      "when": {
+        "east": "side"
+      }
+    },
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe_side",
+        "y": 270
+      },
+      "when": {
+        "west": "side"
+      }
+    },
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe_side",
+        "x": 270
+      },
+      "when": {
+        "up": "side"
+      }
+    },
+    {
+      "apply": {
+        "model": "indastrialmodformine:block/heat_pipe_side",
+        "x": 90
+      },
+      "when": {
+        "down": "side"
+      }
+    }
+  ]
+}
